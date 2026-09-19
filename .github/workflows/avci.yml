@@ -1,0 +1,23 @@
+name: KURT VERI AVCISI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  av:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repoyu al
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Requests kur
+        run: pip install requests
+
+      - name: KURT Veri Avcisini calistir
+        run: python avci.py
