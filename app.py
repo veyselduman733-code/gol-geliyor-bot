@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 import pandas as pd
@@ -7,7 +8,11 @@ st.set_page_config(page_title="Canlı Maç Tempo Paneli", page_icon="⚽", layou
 st.title("⚽ Canlı Futbol Maç Tempo Paneli")
 st.markdown("Bu panel, API-Football üzerinden anlık canlı maçları tarar ve tempo skorlarını listeler.")
 
-API_KEY = "945d0ff6734c5d774ca28db842c6a29a"
+API_KEY = os.getenv("API_FOOTBALL_KEY", "").strip()
+if not API_KEY:
+    st.error("API_FOOTBALL_KEY sunucu ortam değişkeni tanımlanmadı. Anahtar kod içine yazılmamalı.")
+    st.stop()
+
 url = "https://v3.football.api-sports.io/fixtures"
 querystring = {"live": "all"}
 headers = {
