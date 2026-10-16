@@ -1,8 +1,9 @@
+import os
 import requests
 
-API_KEY = "945d0ff6734c5d774ca28db842c6a29a"
-TELEGRAM_TOKEN = "8637941503:AAGjJRu5uPOxzheXf9jYvd1Mws2egRz_K8s"
-CHAT_ID = "-1004394085948"
+API_KEY = os.getenv("API_FOOTBALL_KEY", "").strip()
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
+CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
 
 def send_telegram(message):
     try:
@@ -59,4 +60,11 @@ def check_matches():
         print("API Hatası:", e)
 
 if __name__ == "__main__":
+    missing = [name for name, value in {
+        "API_FOOTBALL_KEY": API_KEY,
+        "TELEGRAM_BOT_TOKEN": TELEGRAM_TOKEN,
+        "TELEGRAM_CHAT_ID": CHAT_ID,
+    }.items() if not value]
+    if missing:
+        raise SystemExit("Gerekli gizli ortam değişkenleri eksik: " + ", ".join(missing))
     check_matches()
